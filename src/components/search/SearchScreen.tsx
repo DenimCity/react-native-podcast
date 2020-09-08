@@ -2,19 +2,24 @@ import React from 'react';
 import {Box} from 'react-native-design-utility';
 import {TextInput} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
+
 import {theme} from '../../constants/theme';
+
+import KeyBoardDissmissView from '../KeyboardDismissView';
 
 const SearchScreen = () => {
   return (
-    <Box f={1} bg="white">
-      <Box h={50} w="100%" px="sm" mt="sm">
-        <TextInput
-          style={s.input}
-          placeholder="Search Podcast"
-          selectionColor={theme.color.blueLight}
-        />
+    <KeyBoardDissmissView>
+      <Box f={1} bg="white">
+        <Box h={50} w="100%" px="sm" mt="sm">
+          <TextInput
+            style={s.input}
+            placeholder="Search Podcast"
+            selectionColor={theme.color.blueLight}
+          />
+        </Box>
       </Box>
-    </Box>
+    </KeyBoardDissmissView>
   );
 };
 
