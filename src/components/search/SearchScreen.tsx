@@ -1,6 +1,6 @@
 import React from 'react';
-import {Box} from 'react-native-design-utility';
-import {TextInput} from 'react-native-gesture-handler';
+import {Box, Text} from 'react-native-design-utility';
+import {TextInput, FlatList} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
 
 import {theme} from '../../constants/theme';
@@ -11,13 +11,32 @@ const SearchScreen = () => {
   return (
     <KeyBoardDissmissView>
       <Box f={1} bg="white">
-        <Box h={50} w="100%" px="sm" mt="sm">
+        <Box h={50} w="100%" px="sm" mt="sm" mb="sm">
           <TextInput
             style={s.input}
             placeholder="Search Podcast"
             selectionColor={theme.color.blueLight}
           />
         </Box>
+        <FlatList
+          style={s.list}
+          data={[{id: 1}, {id: 2}]}
+          renderItem={() => (
+            <Box h={90} dir="row" align="center" px="sm">
+              <Box h={70} w={70} bg="blueLight" radius={10} mr={10} />
+              <Box>
+                <Text bold> Journee Altider</Text>
+                <Text size="xs" color="grey">
+                  This is the subtitle
+                </Text>
+                <Text size="xs" color="blueLight">
+                  400 episodes
+                </Text>
+              </Box>
+            </Box>
+          )}
+          keyExtractor={(item) => String(item.id)}
+        />
       </Box>
     </KeyBoardDissmissView>
   );
@@ -31,6 +50,9 @@ const s = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: theme.space.sm,
     fontSize: theme.text.size.md,
+  },
+  list: {
+    minHeight: '100%',
   },
 });
 export default SearchScreen;
