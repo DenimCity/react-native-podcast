@@ -87,7 +87,7 @@ const SearchScreen = () => {
             </Box>
           </Box>
         )}
-        keyExtractor={(item) => String(item.podcastName)}
+        keyExtractor={(item) => String(item.feedUrl)}
       />
     </Box>
   );
