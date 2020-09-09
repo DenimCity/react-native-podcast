@@ -44,6 +44,11 @@ const SearchScreen = () => {
           value={term}
         />
       </Box>
+      {error && (
+        <Box f={1} center>
+          <Text color="red">{error.message}</Text>
+        </Box>
+      )}
       <FlatList<SearchQuery_search>
         keyboardShouldPersistTaps="never"
         contentContainerStyle={s.listContentContainer}
