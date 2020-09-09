@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Box, Text} from 'react-native-design-utility';
 import {TextInput, FlatList} from 'react-native-gesture-handler';
-import {StyleSheet, ActivityIndicator} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useLazyQuery} from '@apollo/client';
 
 import {theme} from '../../constants/theme';
@@ -13,6 +13,7 @@ import {
 import searchQuery from '../../graphql/query/searchQuery';
 import SearchEmpty from './SearchEmpty';
 import SearchTile from './SearchTile';
+import SearchLoading from './SearchLoading';
 
 const SearchScreen = () => {
   const [term, setTerm] = useState<string>('');
@@ -54,15 +55,7 @@ const SearchScreen = () => {
       <FlatList<SearchQuery_search>
         keyboardShouldPersistTaps="never"
         contentContainerStyle={s.listContentContainer}
-        ListHeaderComponent={
-          <>
-            {loading && (
-              <Box f={1} center h={300}>
-                <ActivityIndicator size="large" color={theme.color.blueLight} />
-              </Box>
-            )}
-          </>
-        }
+        ListHeaderComponent={<>{loading && <SearchLoading />}</>}
         ListEmptyComponent={<>{!loading && <SearchEmpty />}</>}
         data={data?.search ?? []}
         renderItem={({item}) => <SearchTile item={item} />}
