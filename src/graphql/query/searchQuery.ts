@@ -1,9 +1,16 @@
 import {gql} from '@apollo/client';
 
 const searchQuery = gql`
-query searchQuery {
-    
-}
+  query searchQuery($term: String!) {
+    search(term: $term) {
+      artist
+      episodesCount
+      feedUrl
+      thumbnail
+      genres
+      podcastName
+    }
+  }
 `;
 
 export default searchQuery;
