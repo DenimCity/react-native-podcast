@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Box, Text} from 'react-native-design-utility';
 import {TextInput, FlatList} from 'react-native-gesture-handler';
-import {StyleSheet, Image, ActivityIndicator} from 'react-native';
+import {StyleSheet, ActivityIndicator} from 'react-native';
 import {useLazyQuery} from '@apollo/client';
 
 import {theme} from '../../constants/theme';
@@ -11,6 +11,8 @@ import {
   SearchQuery_search,
 } from '../../types/graphql';
 import searchQuery from '../../graphql/query/searchQuery';
+import SearchEmpty from './SearchEmpty';
+import SearchTile from './SearchTile';
 
 const SearchScreen = () => {
   const [term, setTerm] = useState<string>('');
@@ -61,37 +63,9 @@ const SearchScreen = () => {
             )}
           </>
         }
-        ListEmptyComponent={
-          <>
-            {!loading && (
-              <Box f={1} center>
-                <Text color="grey">No podcasts, please search</Text>
-              </Box>
-            )}
-          </>
-        }
+        ListEmptyComponent={<>{!loading && <SearchEmpty />}</>}
         data={data?.search ?? []}
-        renderItem={({item}) => (
-          <Box h={90} dir="row" align="center" px="sm">
-            <Box h={70} w={70} bg="blueLight" radius={10} mr={10}>
-              {item.thumbnail && (
-                <Image source={{uri: item.thumbnail}} style={s.img} />
-              )}
-            </Box>
-            <Box f={1}>
-              <Text bold numberOfLines={1}>
-                {' '}
-                {item.podcastName}
-              </Text>
-              <Text size="xs" color="grey">
-                {item.artist}
-              </Text>
-              <Text size="xs" color="blueLight">
-                {item.episodesCount}
-              </Text>
-            </Box>
-          </Box>
-        )}
+        renderItem={({item}) => <SearchTile item={item} />}
         keyExtractor={(item) => String(item.feedUrl)}
       />
     </Box>
@@ -112,7 +86,6 @@ const s = StyleSheet.create({
     borderRadius: 10,
   },
   listContentContainer: {
-    minHeight: '100%',
     paddingBottom: 90,
   },
 });
