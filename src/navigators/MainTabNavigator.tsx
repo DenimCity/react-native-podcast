@@ -1,6 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import ListenNowScreen from '../components/listenNow/ListenNow';
 import SearchScreen from '../components/search/SearchScreen';
@@ -10,6 +11,7 @@ import {theme} from '../constants/theme';
 
 const MainTab = createBottomTabNavigator();
 const ListenNowStack = createStackNavigator();
+const ICON_SIZE = 24;
 
 const ListenNowStackNavigator = () => {
   return (
@@ -31,6 +33,9 @@ const SearchStackNavigator = () => {
     <SearchStack.Navigator
       screenOptions={{
         headerTintColor: theme.color.blueLight,
+        headerTitleStyle: {
+          color: theme.color.black,
+        },
       }}>
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen
@@ -52,14 +57,42 @@ const LibraryStackNavigator = () => {
 };
 const MainTabNavigator = () => {
   return (
-    <MainTab.Navigator>
+    <MainTab.Navigator
+      tabBarOptions={{
+        activeTintColor: theme.color.blueLight,
+      }}>
       <MainTab.Screen
-        options={{title: 'Listen Now Tab'}}
+        options={{
+          title: 'Listen Now Tab',
+          tabBarIcon: (props) => (
+            <FeatherIcon
+              color={props.color}
+              size={ICON_SIZE}
+              name="headphones"
+            />
+          ),
+        }}
         name="Listen Now"
         component={ListenNowStackNavigator}
       />
-      <MainTab.Screen name="Library" component={LibraryStackNavigator} />
-      <MainTab.Screen name="Search" component={SearchStackNavigator} />
+      <MainTab.Screen
+        name="Library"
+        component={LibraryStackNavigator}
+        options={{
+          tabBarIcon: (props) => (
+            <FeatherIcon color={props.color} size={ICON_SIZE} name="inbox" />
+          ),
+        }}
+      />
+      <MainTab.Screen
+        name="Search"
+        component={SearchStackNavigator}
+        options={{
+          tabBarIcon: (props) => (
+            <FeatherIcon color={props.color} size={ICON_SIZE} name="search" />
+          ),
+        }}
+      />
     </MainTab.Navigator>
   );
 };
