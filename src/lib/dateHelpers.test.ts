@@ -1,4 +1,4 @@
-import {getWeekDate, WeekDayEnum} from './dateHelpers';
+import {getWeekDate, WeekDayEnum, humanDuration} from './dateHelpers';
 
 describe('dateTimeHelpers', () => {
   describe('#getWeekDay()', () => {
@@ -14,5 +14,14 @@ describe('dateTimeHelpers', () => {
     `('should return $expected for the given date', ({date, expected}) => {
       expect(getWeekDate(date)).toBe(expected);
     });
+  });
+});
+
+describe('humanDuraiton', () => {
+  test('should return human readable duration ', () => {
+    expect(humanDuration('03:13:00')).toBe('3hrs. 13min');
+    expect(humanDuration('04:40:00')).toBe('4hrs. 40min');
+    expect(humanDuration('10:13:00')).toBe('10hrs. 13min');
+    expect(humanDuration('12:45:00')).toBe('12hrs. 45min');
   });
 });

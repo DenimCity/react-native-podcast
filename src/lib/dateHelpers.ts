@@ -28,3 +28,9 @@ export const getWeekDate = (date: Date): WeekDayEnum => {
   }
   throw new Error('Invalid Date');
 };
+
+export const humanDuration = (duration: string): string => {
+  const [h, m] = duration.split(':');
+
+  return `${Number(h)}hrs. ${m}min`;
+};
