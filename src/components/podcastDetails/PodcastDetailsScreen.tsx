@@ -9,6 +9,7 @@ import {theme} from '../../constants/theme';
 import {useQuery} from '@apollo/client';
 import {FearchQuery, FearchQueryVariables} from '../../types/graphql';
 import feedQuery from '../../graphql/query/feedQuery';
+import {getWeekDate} from '../../lib/dateHelpers';
 
 type NavigationParams = RouteProp<SearchStackRouteParamList, 'PodcastDetails'>;
 
@@ -83,7 +84,9 @@ export default function PodcastDetailsScreen() {
         keyExtractor={(item) => item.linkUrl}
         renderItem={({item}) => (
           <Box px="sm">
-            <Text size="small">Friday</Text>
+            <Text size="xs" color="grey">
+              {getWeekDate(new Date(item.pubDate)).toUpperCase()}
+            </Text>
             <Text bold>{item.title}</Text>
             <Text size="sm" color="grey" numberOfLines={2}>
               {item.description}
