@@ -9,7 +9,7 @@ import {theme} from '../../constants/theme';
 import {useQuery} from '@apollo/client';
 import {FearchQuery, FearchQueryVariables} from '../../types/graphql';
 import feedQuery from '../../graphql/query/feedQuery';
-import {getWeekDate} from '../../lib/dateHelpers';
+import {getWeekDate, humanDuration} from '../../lib/dateHelpers';
 
 type NavigationParams = RouteProp<SearchStackRouteParamList, 'PodcastDetails'>;
 
@@ -92,7 +92,7 @@ export default function PodcastDetailsScreen() {
               {item.description}
             </Text>
             <Text size="sm" color="grey">
-              3hrs. 13min
+              {humanDuration(item.duration)}
             </Text>
           </Box>
         )}
