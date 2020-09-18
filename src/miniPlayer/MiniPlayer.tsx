@@ -36,26 +36,14 @@ const MiniPlayer = () => {
           <Text numberOfLines={1}>{playerContext.currentTrack.title}</Text>
         </Box>
         <Box mr={10}>
-          {playerContext.isPaused && (
-            <Box>
-              <TouchableOpacity onPress={() => playerContext.play()}>
-                <Icon name="play" size={30} />
-              </TouchableOpacity>
-            </Box>
-          )}
-          {playerContext.isPlaying && (
-            <Box>
-              <TouchableOpacity onPress={() => playerContext.pause()}>
-                <Icon name="pause" size={30} />
-              </TouchableOpacity>
-            </Box>
-          )}
-          {playerContext.isStopped && (
-            <Box>
-              <TouchableOpacity onPress={() => null}>
-                <Icon name="square" size={30} />
-              </TouchableOpacity>
-            </Box>
+          {playerContext.isPaused ? (
+            <TouchableOpacity onPress={() => playerContext.play()}>
+              <Icon name="play" size={30} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => playerContext.pause()}>
+              <Icon name="pause" size={30} />
+            </TouchableOpacity>
           )}
         </Box>
         <Box>
