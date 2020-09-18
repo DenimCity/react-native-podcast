@@ -35,7 +35,7 @@ const MiniPlayer = () => {
         <Box f={1} mr={20}>
           <Text numberOfLines={1}>{playerContext.currentTrack.title}</Text>
         </Box>
-        <Box>
+        <Box mr={10}>
           {playerContext.isPaused && (
             <Box>
               <TouchableOpacity onPress={() => playerContext.play()}>
@@ -57,6 +57,15 @@ const MiniPlayer = () => {
               </TouchableOpacity>
             </Box>
           )}
+        </Box>
+        <Box>
+          <TouchableOpacity>
+            <Icon
+              size={30}
+              name="rotate-cw"
+              onPress={() => playerContext.seekTo()}
+            />
+          </TouchableOpacity>
         </Box>
       </Box>
     </Box>

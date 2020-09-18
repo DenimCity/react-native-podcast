@@ -120,7 +120,6 @@
 				2D7A53315D5C27E4A762676B /* Pods-podcast-podcastTests.debug.xcconfig */,
 				6DB4C7EC18461F4814E9CB0B /* Pods-podcast-podcastTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
