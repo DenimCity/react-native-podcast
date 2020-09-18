@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Text} from 'react-native-design-utility';
 
 import {SearchStackRouteParamList} from '../../navigators/types';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {
   FlatList,
   Image,
@@ -21,6 +21,7 @@ import {usePlayerContext} from '../../context/PlayerContext';
 type NavigationParams = RouteProp<SearchStackRouteParamList, 'PodcastDetails'>;
 
 export default function PodcastDetailsScreen() {
+  const navigation = useNavigation();
   const {data: podcastData} = useRoute<NavigationParams>().params ?? {};
   const {data, loading} = useQuery<FearchQuery, FearchQueryVariables>(
     feedQuery,
@@ -111,7 +112,15 @@ export default function PodcastDetailsScreen() {
             <Text size="xs" color="grey">
               {getWeekDate(new Date(item.pubDate)).toUpperCase()}
             </Text>
-            <Text bold>{item.title}</Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('EpisodeDetails', {
+                  episode: item,
+                  podcast: podcastData,
+                })
+              }>
+              <Text bold>{item.title}</Text>
+            </TouchableOpacity>
             <Text size="sm" color="grey" numberOfLines={2}>
               {item.description}
             </Text>
