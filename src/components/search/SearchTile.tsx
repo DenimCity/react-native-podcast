@@ -17,7 +17,6 @@ const SearchTile: React.FC<{item: searchQuery_search}> = (props) => {
       </Box>
       <Box f={1}>
         <Text bold numberOfLines={1}>
-          {' '}
           {props.item.podcastName}
         </Text>
         <Text size="xs" color="grey">
