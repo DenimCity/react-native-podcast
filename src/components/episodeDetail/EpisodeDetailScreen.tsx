@@ -9,6 +9,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import {theme} from '../../constants/theme';
 import {humanDuration} from '../../lib/dateHelpers';
 import {usePlayerContext} from '../../context/PlayerContext';
+import HtmlReader from '../HtmlReader';
 
 const EpisodeDetailScreen = () => {
   const routeParams = (useRoute().params ?? {}) as {
@@ -71,7 +72,7 @@ const EpisodeDetailScreen = () => {
             <Text size="xl" weight="bold">
               Episode Notes
             </Text>
-            <Text>{routeParams.episode.description}</Text>
+            <HtmlReader html={routeParams.episode.description} />
           </Box>
         </Box>
       </ScrollView>
