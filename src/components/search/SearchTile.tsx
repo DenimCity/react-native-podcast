@@ -1,11 +1,11 @@
 import React from 'react';
 import {Box, Text} from 'react-native-design-utility';
-import {SearchQuery_search} from '../../types/graphql';
+import {searchQuery_search} from '../../types/graphql';
 import {Image, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const SearchTile: React.FC<{item: SearchQuery_search}> = (props) => {
+const SearchTile: React.FC<{item: searchQuery_search}> = (props) => {
   const navigation = useNavigation();
 
   return (
@@ -26,10 +26,7 @@ const SearchTile: React.FC<{item: SearchQuery_search}> = (props) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('PodcastDetails', {
-              screen: 'PodcastDetails',
-              params: {
-                data: props.item,
-              },
+              data: props.item,
             })
           }>
           <Text size="xs" color="blueLight">

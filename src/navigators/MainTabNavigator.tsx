@@ -16,23 +16,8 @@ import EpisodeDetailScreen from '../components/episodeDetail/EpisodeDetailScreen
 
 const MainTab = createBottomTabNavigator();
 const ListenNowStack = createStackNavigator();
-const PodcastStack = createStackNavigator();
 const ICON_SIZE = 24;
 
-const PodcastStackNavigator = () => {
-  return (
-    <PodcastStack.Navigator>
-      <PodcastStack.Screen
-        name="PodcastDetails"
-        component={PodcastDetailsScreen}
-      />
-      <PodcastStack.Screen
-        name="EpisodeDetails"
-        component={EpisodeDetailScreen}
-      />
-    </PodcastStack.Navigator>
-  );
-};
 const ListenNowStackNavigator = () => {
   return (
     <ListenNowStack.Navigator>
@@ -56,12 +41,18 @@ const SearchStackNavigator = () => {
         headerTitleStyle: {
           color: theme.color.black,
         },
+        headerBackTitle: 'Back',
       }}>
       <SearchStack.Screen name="Search" component={SearchScreen} />
       <SearchStack.Screen
         name="PodcastDetails"
-        component={PodcastStackNavigator}
-        options={{headerTitle: '', headerBackTitle: 'Back'}}
+        component={PodcastDetailsScreen}
+        options={{headerTitle: ''}}
+      />
+      <SearchStack.Screen
+        name="EpisodeDetails"
+        component={EpisodeDetailScreen}
+        options={{headerTitle: ''}}
       />
     </SearchStack.Navigator>
   );
