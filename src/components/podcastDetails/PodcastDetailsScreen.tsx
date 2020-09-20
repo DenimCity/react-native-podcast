@@ -1,7 +1,5 @@
 import React from 'react';
 import {Box, Text} from 'react-native-design-utility';
-
-import {SearchStackRouteParamList} from '../../navigators/types';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {
   FlatList,
@@ -11,18 +9,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import {theme} from '../../constants/theme';
 import {useQuery} from '@apollo/client';
+
+import {SearchStackRouteParamList} from '../../navigators/types';
+import {theme} from '../../constants/theme';
 import {FearchQuery, FearchQueryVariables} from '../../types/graphql';
 import feedQuery from '../../graphql/query/feedQuery';
 import {getWeekDate, humanDuration} from '../../lib/dateHelpers';
 import {usePlayerContext} from '../../context/PlayerContext';
+import {DBContext} from '../../context/DBContext';
+import {PodcastModel} from '../models/PodcastModel';
 
 type NavigationParams = RouteProp<SearchStackRouteParamList, 'PodcastDetails'>;
 
 export default function PodcastDetailsScreen() {
   const navigation = useNavigation();
   const {data: podcastData} = useRoute<NavigationParams>().params ?? {};
+  const dbContext = React.useContext(DBContext);
+
   const {data, loading} = useQuery<FearchQuery, FearchQueryVariables>(
     feedQuery,
     {
@@ -33,6 +37,18 @@ export default function PodcastDetailsScreen() {
   );
 
   const playerContext = usePlayerContext();
+
+  function subscribeFunc(podcast: PodcastModel) {
+    dbContext.subToPodcast(
+      new PodcastModel({
+        epidsodeCount: podcast.epidsodeCount,
+        artist: podcast.artist,
+        feedUrl: podcast.feedUrl,
+        name: podcast.name,
+        thumbnail: podcast.thumbnail,
+      }),
+    );
+  }
 
   return (
     <Box f={1} bg="white">
@@ -55,9 +71,11 @@ export default function PodcastDetailsScreen() {
                 <Text size="xs" color="grey">
                   {podcastData.artist}
                 </Text>
-                <Text color="blue" size="xs">
-                  Subscribe
-                </Text>
+                <TouchableOpacity onPress={() => subscribeFunc(podcastData)}>
+                  <Text color="blue" size="xs">
+                    Subscribe
+                  </Text>
+                </TouchableOpacity>
               </Box>
             </Box>
             <Box px="sm" mb="md" dir="row" align="center">
