@@ -62,13 +62,16 @@ export const PlayerContextProvider: React.FC = (props) => {
     setCurrentTrack(track);
     await TrackPlayer.play();
   };
+
   const pause = async () => {
     await TrackPlayer.pause();
   };
+
   const seekTo = async (amount = 30) => {
     const position = await TrackPlayer.getPosition();
     await TrackPlayer.seekTo(position + amount);
   };
+
   const value: PlayerContextType = {
     isPlaying: playerState === STATE_PLAYING,
     isPaused: playerState === STATE_PAUSED,
@@ -79,6 +82,7 @@ export const PlayerContextProvider: React.FC = (props) => {
     play,
     seekTo,
   };
+
   return (
     <PlayerContext.Provider value={value}>
       {props.children}
