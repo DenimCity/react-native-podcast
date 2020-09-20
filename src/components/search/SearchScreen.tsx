@@ -79,11 +79,7 @@ const SearchScreen = () => {
 
 const s = StyleSheet.create({
   input: {
-    // height: 40,
     flex: 1,
-    // backgroundColor: theme.color.greyLightest,
-    // borderRadius: 10,
-    // paddingHorizontal: theme.space.sm,
     fontSize: theme.text.size.md,
   },
   img: {
