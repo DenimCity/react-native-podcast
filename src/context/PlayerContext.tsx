@@ -50,6 +50,8 @@ export const PlayerContextProvider: React.FC = (props) => {
   }, []);
 
   const play = async (track?: Track) => {
+    // we want to makse sure the stop the current track to play the next rtack
+    await pause();
     if (!track) {
       if (currentTrack) {
         await TrackPlayer.play();
@@ -57,12 +59,20 @@ export const PlayerContextProvider: React.FC = (props) => {
       return;
     }
 
-    if (currentTrack && track.id !== currentTrack.id) {
-      await TrackPlayer.reset();
+    if (currentTrack && track.id === currentTrack.id) {
+      await TrackPlayer.play();
     }
-    await TrackPlayer.add([track]);
-    setCurrentTrack(track);
-    await TrackPlayer.play();
+    try {
+      // check if track exists in the que
+      await TrackPlayer.getTrack(track.id);
+    } catch (error) {
+      await TrackPlayer.add([track]);
+      console.log('play -> error', error);
+    } finally {
+      setCurrentTrack(track);
+      await TrackPlayer.skip(track.id);
+      await TrackPlayer.play();
+    }
   };
 
   const pause = async () => {

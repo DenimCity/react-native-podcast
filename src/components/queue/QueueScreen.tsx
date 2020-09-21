@@ -7,10 +7,12 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import TrackPlayer from 'react-native-track-player';
 
 import {theme} from '../../constants/theme';
+import {usePlayerContext} from '../../context/PlayerContext';
 
 const QueueScreen = () => {
   const [queue, setQueue] = React.useState<TrackPlayer.Track[]>([]);
   const navigation = useNavigation();
+  const playerContext = usePlayerContext();
 
   const getQueue = async () => {
     const trackQueues = await TrackPlayer.getQueue();
@@ -44,22 +46,29 @@ const QueueScreen = () => {
       <ScrollView>
         {queue.map((track) => {
           return (
-            <Box h={90} px="md" dir="row">
-              <Box h={70} w={70} radius={10} bg="blue" mr={10} key={track.id}>
-                <Image
-                  source={{uri: track.artwork}}
-                  style={{height: 70, width: 70, borderRadius: 10}}
-                />
+            <TouchableOpacity
+              key={track.id}
+              onPress={async () => {
+                await playerContext.play(track);
+                navigation.goBack();
+              }}>
+              <Box h={90} px="md" dir="row">
+                <Box h={70} w={70} radius={10} bg="blue" mr={10}>
+                  <Image
+                    source={{uri: track.artwork}}
+                    style={{height: 70, width: 70, borderRadius: 10}}
+                  />
+                </Box>
+                <Box f={1}>
+                  <Text bold numberOfLines={1}>
+                    {track.title}
+                  </Text>
+                  <Text size="sm" color="gray">
+                    {track.artist}
+                  </Text>
+                </Box>
               </Box>
-              <Box f={1}>
-                <Text bold numberOfLines={1}>
-                  {track.title}
-                </Text>
-                <Text size="sm" color="gray">
-                  {track.artist}
-                </Text>
-              </Box>
-            </Box>
+            </TouchableOpacity>
           );
         })}
       </ScrollView>
